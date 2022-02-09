@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>16-889 Assignment 1: Rendering Basics with PyTorch3D</title>
+</head>
+<body>
+    <h1> 16-889 Assignment 1: Rendering Basics with PyTorch3D</h1>
+    <p> Name: Guanzhou Ji, Andrew ID: gji<br/>
+    usage of late day: None</p>
+
+
+    <h2>1. Practicing with Cameras</h2>
+    <h3>1.1. 360-degree Renders </h3>
+    <div><img src="submission_img/1.1. 360-degree Renders.gif" alt=""
+        style="width:256px;height:256px;"/>
+        <p style="text-indent: 25px;font-family:Times New Roman;font-style:italic;">
+         Gif for showing the cow mesh from continously changing viewpoints.</p>
+
+    <p style="padding-left:25px; text-indent:-25px;">
+       Parameter Settings:<br/>
+       angles = torch.linspace(0, 360, 20)<br/>
+       R, T = look_at_view_transform(2.7, 0, angle)</p>
+    <p>
+       It takes number of frames to divide 360 degrees into detailed azim values for rendering images.</p>
+    </div>
+
+    <h3>1.2 Re-creating the Dolly Zoom</h3>
+    <div><img src="submission_img/1.2 Re-creating the Dolly Zoom.gif" alt=""
+        style="width:256px;height:256px;"/>
+    <p style="text-indent: 25px;font-family:Times New Roman;font-style:italic;">
+         Gif for showing dolly zoom effects</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+       Parameter Settings:<br/>
+       fovs = torch.linspace(5, 120, num_frames), num_frames = 30<br/>
+       distance = 2/(2 * math.tan(0.5 * fov * math.pi/180)) <br/>
+        T = [[0, 0, distance*(5/(3**0.5))]]</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+       Distance Calculation:<br/>
+       The The Dolly Zoom is a famous camera effect, first used in the Alfred Hitchcock film Vertigo.<br/>
+       in 3d rendering, the default frame width is 2 in calculating the distance. </p>
+    <p style="padding-left:25px; text-indent:-25px;">
+       Distance Optimization:<br/>
+       The assumed optimal camera setting is [[0,0,3]] for T, when the fov is 60 degree.<br/>
+       The optimal distance requires a ratio for distance when it is placed in T. <br/>
+       The real distance when fov = 60 degree is 3**0.5; however, the distance under 3**0.5 is too large. <br/>
+       After multiple testings, the author selected optimal camera setting is [[0,0,5]] for T, when the fov is 60 degree.<br/>
+       Thus, T = [[0, 0, distance*(5/(3**0.5))]] could realize similar effects as example gif.</p>
+    </div>
+
+
+    <h2>2. Practicing with Meshes</h2>
+    <table><tr>
+        <td><img src="submission_img/2.1 Constructing a Tetrahedron.gif", alt="",border=50,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/2.2 Constructing a Cube.gif", alt="",border=50,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent: 25px;font-family:Times New Roman;font-style:italic;">
+        Left image: 2.1 Constructing a Tetrahedron; Right image: 2.2 Constructing a Cube </p>
+    <p style="padding-left:25px; text-indent:-25px;">
+       Tetrahedron Settings:<br/>
+       vertices = [[0,0,0],[1,0,2],[2,1,0],[0,2,1]]<br/>
+       faces = [[0,1,2],[0,2,3],[0,3,1],[1,2,3]]<br/>
+       Number of vertices: 4 <br/>
+       Number of (triangle) faces: 4<br/>
+       angles = torch.linspace(0, 360, 40) for azim in visualization<br/>
+       R, T = look_at_view_transform(7, 20, angle)</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+       Cube Settings:<br/>
+        vertices = [[0,0,0],[0,1,0],[1,1,0],[1,0,0],[0,0,1],[0,1,1],[1,1,1],[1,0,1]]<br/>
+        faces = [[7,3,0],[0,4,7],[0,1,2],[0,2,3],[4,5,6],[4,6,7],[6,5,1],[6,2,1], [4,0,5],[0,1,5],[3,6,7],[2,3,6]]<br/>
+       Number of vertices: 8 <br/>
+       Number of (triangle) faces: 12<br/>
+       angles = torch.linspace(0, 360, 40) for azim angle in visualization<br/>
+       R, T = look_at_view_transform(4, 12, angle)</p>
+
+    <h2>3. Re-texturing a mesh</h2>
+    <div class = 'image3.1'></div>
+    <div><img src="submission_img/3. Re-texturing a mesh.gif" alt=""
+        style="width:256px;height:256px;"/>
+        <p style="text-indent: 25px;font-family:Times New Roman;font-style:italic;">
+        Retextured Image.</p>
+    </div>
+
+
+    <h2>4. Camera Transformations</h2>
+    <div class = 'image4.0'></div>
+    <div><img src="submission_img/4. Camera Transformations00.jpg" alt=""
+        style="width:256px;height:256px;"/>
+        <p style="text-indent: 25px;font-family:Times New Roman;font-style:italic;">
+        Baseline Rendering Image.</p>
+        <p style="padding-left:25px; text-indent:-25px;">
+        R_relative and T_relative Settings: <br/>
+        R_relative=[[1,0,0],[0,1,0],[0,0,1]], T_relative=[0,0,3]</p>
+    </div>
+    <table><tr>
+        <td><img src="submission_img/4. Camera Transformations01.jpg", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/4. Camera Transformations02.jpg", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/4. Camera Transformations03.jpg", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/4. Camera Transformations04.jpg", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent: 25px;font-family:Times New Roman;font-style:italic;">
+        From left to Right:
+        image1(rotate 90 degree clockwise); image2(zoom out in z axis);
+        image3(shift in xy plane); image4(side view).</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+       R_relative and T_relative Settings:<br/>
+       image1(rotate 90 degree clockwise):R_relative=[[0,1,0],[-1,0,0],[0,0,1]], T_relative=[0,0,0] <br/>
+       image2(zoom out in z axis):R_relative=[[1,0,0],[0,1,0],[0,0,1]], T_relative=[0,0,2]<br/>
+       image3(shift in xy plane):R_relative=[[1,0,0],[0,1,0],[0,0,1]], T_relative=[0.5,-0.5,0]<br/>
+       image4(side view):R_relative=[[0,0,1],[0,1,0],[-1,0,0]], T_relative=[-3,0,3] </p>
+
+
+    <h2>5. Rendering Generic 3D Representations</h2>
+    <h3>5.1 Rendering Point Clouds from RGB-D Images </h3>
+    <table><tr>
+        <td><img src="submission_img/5.1 Rendering Point Clouds plant1.gif" , alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/5.1 Rendering Point Clouds plant2.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/5.1 Rendering Point Clouds plant3.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent:0px;font-family:Times New Roman;font-style:italic;">
+        From left to Right:
+        image1(the point cloud corresponding to the first image);
+        image2(The point cloud corresponding <br/>to the second image);
+        image3(The point cloud formed by the union of the first 2 point clouds).</p>
+
+
+
+    <h3>5.2 Parametric Functions</h3>
+    <table><tr>
+        <td><img src="submission_img/5.2 Parametric Functions_par_torus_100.gif" , alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/5.2 Parametric Functions_par_torus_200.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent:25px;font-family:Times New Roman;font-style:italic">
+        Left image: num_samples=100; right image: num_samples=200</p>
+    <table><tr>
+        <td><img src="submission_img/5.2 Parametric Functions_par_torus_300.gif" , alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/5.2 Parametric Functions_par_torus_1000.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent:25px;font-family:Times New Roman;font-style:italic">
+        Left image: num_samples=300; Right image: num_samples=1000</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        The Time of Execution:<br/>
+        num_samples=100: 88.892s;<br/>
+        num_samples=200: 289.623s;<br/>
+        num_samples=300: 716.862s;<br/>
+        num_samples=1000: 7187.613s.</p>
+
+
+    <h3>5.3 Implicit Surfaces </h3>
+    <div class = 'image5.3'></div>
+    <div><img src="submission_img/5.3 Implicit Surfaces.gif" alt=""
+        style="width:256px;height:256px;"/>
+    <p style="text-indent:25px;font-family:Times New Roman;font-style:italic">
+        Implicit Surfaces</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        The Time of Execution:<br/>
+        mesh rendering: 349.623s</p>
+    </div>
+    <p style="padding-left:25px; text-indent:-25px;">
+        Rendering Speed:<br/>
+        As the above two gif diagrams shown, 3D point could is rendered in 100x100 grid, 200x200 grid,<br/>
+        300x300 grid, and 1000x1000 grid (num_samples 1000). The higher num_samples results in significantly<br/>
+        longer time. Based on the current rendering results, the point cloud with num_samples=300 can <br/>
+        generate similar quality with mesh rendering. However, it takes longer for the point cloud with <br/>
+        num_samples=300 (716.862s) than mesh rendering(349.623s).</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        Ease of Use:<br/>
+        3D point cloud rendering requires several attempts to test the optimal number of samples for 3d points <br/>
+        rendering. It the real rending, it costs time and labors. Mesh rendering could be more doable</p>
+
+    <p style="padding-left:25px; text-indent:-25px;">
+        Rendering Quality:<br/>
+        The higher num_samples results in a higher quality rendering, but when the num_samples reached at  <br/>
+        1000, the result shows some aliasing problems. By contrast, the mesh rendering didn't have such an issue.</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        Memory Usage (CPU percent):<br/>
+        num_samples=100: 17.6%;<br/>
+        num_samples=200: 17.7%;<br/>
+        num_samples=300: 15.7%;<br/>
+        num_samples=1000: 15.7%;<br/>
+        mesh rendering: 17.4%.<br/>
+        The calculation of CPU is based on a single image rendered from the code. The results didn't show significant variation in CPU usage.
+    </p>
+
+
+    <h2>6. Do Something Fun</h2>
+     <p style="padding-left:25px; text-indent:-25px;">
+         This part aims to make animation for the cow.Compared to previous questions, this part explored: <br/>
+         (1). Movement of the cow with mesh texture;<br/>
+         (2). Utilization of trigonometric function for movement;<br/>
+         (3). Adjustment of light position to visualize the scene from side view<br/>
+     </p>
+    <table><tr>
+        <td><img src="submission_img/6. Do fun0.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/6. Do fun1.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/6. Do fun2.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent:25px;font-family:Times New Roman;font-style:italic">
+        From left to Right: image1(rotate in xy plane);image2(move in the z axis); image3(jump in y direction)</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        image1(rotate in xy plane):<br/>
+        angles = torch.linespace(-20, 20, 5),<br/>
+        R_relative=[[math.cos(angle*math.pi/180), -math.sin(angle*math.pi/180), 0],<br/>
+                    [math.sin(angle*math.pi/180), math.cos(angle*math.pi/180), 0],<br/>
+                    [0,0,1]]
+        T_relative=[0,0,0]</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        image2(move in the z axis):<br/>
+        dis = torch.linespace(0, 0.5, 10),<br/>
+        R_relative=[[1,0,0],
+                    [0,1,0],
+                    [0,0,1]],
+        T_relative=[0,0,dis]</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        image3(jump in y direction):<br/>
+        dis = torch.linespace(0, 0.5, 10),<br/>
+        R_relative=[[1,0,0],
+                    [0,1,dis],
+                    [0,0,1]],
+        T_relative=[0,0,0]
+        </p>
+    <table><tr>
+        <td><img src="submission_img/6. Do fun3.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/6. Do fun4.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/6. Do fun5.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent:25px;font-family:Times New Roman;font-style:italic">
+        From left to Right: image4(vibrate in front view);
+        image5(vibrate in side view); image6(vibrate in back view)</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        image4(vibrate in front view)):<br/>
+        angles = torch.linespace(-30, 30, 15),
+        R,T = look_at_view_transform(3, 5*(1-math.cos(angle), 5*(1-math.cos(angle)+180)</p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        image5(vibrate in side view):<br/>
+        angles = torch.linespace(-60, 60, 3),<br/>
+        R,T = look_at_view_transform(3, -8*(1-math.cos(angle*math.pi/180), 8*(1-math.cos(angle*math.pi/180)+180)<br/>
+        Change lights location from [[0,0,3]] into [[3,3,0]] </p>
+    <p style="padding-left:25px; text-indent:-25px;">
+        image6(vibrate in back view):<br/>
+        angles = torch.linespace(-60, 60, 5),
+        R,T = look_at_view_transform(3, -4*math.cos(angle*math.pi/180), 4*math.sin(angle*math.pi/180)+180)<br/>
+        </p>
+
+
+    <h2>(Extra Credit) 7. Sampling Points on Meshes</h2>
+    <table><tr>
+        <td><img src="submission_img/a1 = [(1-x0.5) for x in a] radius 0.01 sampling10_cow.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/a1 = [(1-x0.5) for x in a] radius 0.01 sampling100_cow.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/a1 = [(1-x0.5) for x in a] radius 0.01 sampling1000_cow.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+        <td><img src="submission_img/a1 = [(1-x0.5) for x in a] radius 0.01 sampling10000_cow.gif", alt="",border=0,
+        style="width:256px;height:256px;"/></td>
+    </tr></table>
+    <p style="text-indent:25px;font-family:Times New Roman;font-style:italic">
+    Sampling Results, From left to Right: image1(randomly sample 10 points);image2(randomly sample 100 points);
+        image3(randomly sample 1000 points); image4(randomly sample 10000 points)</p>
+
+    <p style="padding-left:25px; text-indent:-25px;">
+         The sampling function:<br/>
+    a1 = 1 - a**0.5; a, a2 ~ [0,1]<br/>
+    v = a1p1 + (1 - a1)a2p2 + (1 - a1)(1 - a2)p3
+    </p>
+    <p style="padding-left:25px; text-indent:-25px;">
+    The  function that takes a triangle mesh and the number of samples and outputs a point cloud<br/>
+        for i in range(n):<br/>
+        for j in range(len(faces)):<br/>
+    v = [a1[i] * vertices[faces[j][0]][0] + (1 - a1[i]) * a2[i] * vertices[faces[j][1]][0] + (1 - a1[i]) * (1 - a2[i]) * vertices[faces[j][2]][0],<br/>
+       a1[i] * vertices[faces[j][0]][1] + (1 - a1[i]) * a2[i] * vertices[faces[j][1]][1] + (1 - a1[i]) * (1 - a2[i]) * vertices[faces[j][2]][1],<br/>
+       a1[i] * vertices[faces[j][0]][2] + (1 - a1[i]) * a2[i] * vertices[faces[j][1]][2] + (1 - a1[i]) * (1 - a2[i]) * vertices[faces[j][2]][1]]<br/>
+    verts.append(v)</p>
+
+
+</body>
+</html>
