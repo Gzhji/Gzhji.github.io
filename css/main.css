@@ -4,7 +4,7 @@
     --muted: #5f6368;
     --border: #e8eaed;
     --accent: #1a73e8;
-    --max-width: 2660px;
+    --max-width: 2760px;
 }
 
 * {
@@ -109,6 +109,10 @@ nav {
     margin: 0 0 1.75rem 2rem;
 }
 
+.clearfix {
+    margin-right: calc(min(280px, 36vw) + 2rem);
+}
+
 .profile figure {
     margin: 0;
 }
@@ -159,7 +163,7 @@ article p {
 .publication-paper,
 .publication-code {
     color: var(--text);
-    font-weight: 700;
+    font-weight: normal;
     text-decoration: none;
 }
 
@@ -325,6 +329,10 @@ footer a:hover {
         float: none;
         width: 100%;
         margin-left: 0;
+    }
+
+    .clearfix {
+        margin-right: 0;
     }
 }
 
