@@ -120,6 +120,10 @@ nav {
     max-width: 72ch;
 }
 
+.muted {
+    color: var(--muted);
+}
+
 .profile {
     float: right;
     width: min(280px, 36vw);
@@ -164,6 +168,16 @@ article p {
     font-size: 0.95rem;
 }
 
+article a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+article a:hover {
+    color: #87ceeb;
+}
+
 .no-gap p {
     margin: 0;
 }
@@ -202,6 +216,15 @@ article p a {
 
 article p a:hover {
     text-decoration: underline;
+}
+
+.text-black {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.text-black:hover {
+    text-decoration: none;
 }
 
 h2 {
