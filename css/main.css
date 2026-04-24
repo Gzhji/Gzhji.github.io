@@ -185,6 +185,10 @@ article a:hover {
     margin: 0;
 }
 
+.news {
+    position: relative;
+}
+
 .news p,
 .publication-copy p {
     margin: 0 0 1.45rem;
@@ -356,7 +360,7 @@ h2 a {
 footer {
     display: block;
     border-top: 1px solid var(--border);
-    margin-top: 3rem;
+    margin-top: 0.5rem;
     padding: 1rem 0 2rem;
     color: var(--muted);
     font-size: 0.88rem;
@@ -406,4 +410,58 @@ footer a:hover {
         width: auto;
         margin-bottom: 0.45rem;
     }
+}
+
+.news-archive {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    margin-right: 1.5rem;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.news-archive summary {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    padding: 0rem 0;
+    user-select: none;
+    list-style: none;
+    white-space: nowrap;
+}
+
+.news-archive summary:hover {
+    color: var(--accent);
+}
+
+.news-archive summary::marker {
+    display: none;
+}
+
+.news-archive summary::before {
+    content: "▶ ";
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.news-archive[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.news-archive-content {
+    margin-top: 0rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border);
+    position: absolute;
+    background: white;
+    min-width: 300px;
+    z-index: 100;
+}
+
+.news-archive-content p {
+    margin: 0 0 0rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--muted);
 }
