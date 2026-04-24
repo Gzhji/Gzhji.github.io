@@ -170,6 +170,11 @@ article p {
     font-size: 0.95rem;
 }
 
+.post > p {
+    margin-top: 1rem;
+    color: var(--muted);
+}
+
 article a {
     color: var(--text);
     text-decoration: none;
@@ -413,18 +418,20 @@ footer a:hover {
 }
 
 .news-archive {
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-    margin-right: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
     cursor: pointer;
-    display: inline-block;
+    display: block;
+    width: 100%;
 }
 
 .news-archive summary {
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text);
-    padding: 0rem 0;
+    padding: 0.1rem 0;
+    margin: 0;
     user-select: none;
     list-style: none;
     white-space: nowrap;
@@ -450,18 +457,20 @@ footer a:hover {
 }
 
 .news-archive-content {
-    margin-top: 0rem;
+    margin-top: 0;
+    margin-bottom: 0;
     padding-left: 1.5rem;
     border-left: 2px solid var(--border);
-    position: absolute;
-    background: white;
-    min-width: 300px;
-    z-index: 100;
+    position: static;
+    background: transparent;
+    min-width: auto;
+    z-index: auto;
 }
 
 .news-archive-content p {
-    margin: 0 0 0rem;
+    margin: 0;
+    padding: 0;
     font-size: 0.95rem;
-    line-height: 1.55;
+    line-height: 1.45;
     color: var(--muted);
 }
