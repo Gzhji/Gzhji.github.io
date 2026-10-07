@@ -15,6 +15,11 @@ html {
     scroll-behavior: smooth;
 }
 
+sup {
+    font-size: 0.7em;
+    vertical-align: super;
+}
+
 body {
     margin: 0;
     padding-top: 72px;
