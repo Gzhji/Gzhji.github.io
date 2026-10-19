@@ -85,6 +85,93 @@ nav {
     padding-top: 3rem;
 }
 
+.team-page .post {
+    max-width: min(100%, 100ch);
+}
+
+.lab-intro {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+        "title image"
+        "description image";
+    align-items: start;
+    gap: 1rem;
+}
+
+.team-page .post > :is(section, article):not(:last-child) {
+    margin-bottom: 3rem;
+}
+
+.team-page .lab-intro .post-header {
+    grid-area: title;
+    margin: 0;
+    padding: 0;
+}
+
+.teaching-intro {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "title image";
+    align-items: start;
+    gap: 1rem;
+}
+
+.teaching-page .post > :is(section, article):not(:last-child) {
+    margin-bottom: 3rem;
+}
+
+.teaching-intro .post-header {
+    grid-area: title;
+    margin: 0;
+    padding: 0;
+}
+
+.team-page .lab-intro > p {
+    grid-area: description;
+    margin: 0;
+}
+
+.lab-intro-image,
+.teaching-intro-image {
+    grid-area: image;
+    min-width: 0;
+}
+
+.lab-intro-image img,
+.teaching-intro-image img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.team-page .indented-content {
+    margin-left: 2rem;
+}
+
+.research-area-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.team-page .research-area {
+    margin: 0;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.team-page h4 {
+    font-weight: 400;
+}
+
+.team-page .research-area p {
+    margin: 0;
+    line-height: 1.4;
+}
+
 .post-header {
     margin-bottom: 1rem;
     padding-top: 1rem;
@@ -96,6 +183,23 @@ nav {
     font-weight: 700;
     line-height: 1.1;
     max-width: 150%;
+}
+
+.member-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.member-list li::marker {
+    content: "";
+}
+
+.former-member-list {
+    padding-left: 1.5em;
+}
+
+.teaching-list {
+    list-style: none;
 }
 
 .post-title span {
@@ -394,6 +498,30 @@ footer a:hover {
 
     .clearfix {
         margin-right: 0;
+    }
+}
+
+@media (max-width: 920px) {
+    .research-area-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .lab-intro {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "title"
+            "description"
+            "image";
+    }
+
+    .teaching-intro {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "title"
+            "image";
     }
 }
 
