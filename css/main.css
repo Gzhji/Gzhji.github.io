@@ -158,7 +158,8 @@ nav {
     object-fit: cover;
 }
 
-.lab-intro-image img {
+.lab-intro-image img,
+.teaching-intro-image img {
     border-radius: 8px;
 }
 
@@ -209,6 +210,7 @@ nav {
 .team-page .research-area p {
     margin: 0;
     line-height: 1.4;
+    color: var(--muted);
 }
 
 .post-header {
