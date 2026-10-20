@@ -256,6 +256,47 @@ nav {
     padding-top: 1rem;
 }
 
+.home-page .post-header {
+    padding-top: 0;
+}
+
+.service-page .post-header {
+    padding-top: 0;
+}
+
+.home-page .home-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+    grid-template-areas:
+        "bio image"
+        "bio socials";
+    align-items: start;
+    gap: 2rem;
+}
+
+.home-page .profile {
+    grid-area: image;
+    float: none;
+    width: 100%;
+    margin: 0;
+}
+
+.home-page .social-links {
+    grid-area: socials;
+    width: 78.125%;
+    justify-content: flex-start;
+    margin: 0.25rem auto 0;
+}
+
+.home-page .profile img {
+    width: 78.125%;
+}
+
+.home-page .clearfix {
+    grid-area: bio;
+    margin-right: 0;
+}
+
 .post-title {
     margin: 0;
     font-size: 150%;
@@ -340,7 +381,7 @@ nav {
     width: 80%;
     display: block;
     margin: 0 auto;
-    border-radius: 0;
+    border-radius: 8px;
     border: 1px solid var(--border);
 }
 
@@ -590,6 +631,7 @@ footer a:hover {
     .clearfix {
         margin-right: 0;
     }
+
 }
 
 @media (max-width: 920px) {
@@ -617,6 +659,18 @@ footer a:hover {
 }
 
 @media (max-width: 700px) {
+    .home-page .home-intro {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "bio"
+            "image"
+            "socials";
+    }
+
+    .home-page .profile {
+        max-width: 280px;
+    }
+
     body {
         padding-top: 98px;
     }
